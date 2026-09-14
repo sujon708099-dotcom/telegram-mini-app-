@@ -2,291 +2,681 @@
 <html lang="bn">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Viral Link - Admin Panel</title>
+<title>Viral Link</title>
 
 <style>
-*{
-  box-sizing:border-box;
-}
+*{box-sizing:border-box}
 
 body{
-  margin:0;
-  background:#0d0e21;
-  color:#fff;
-  font-family:Arial,"Noto Sans Bengali",sans-serif;
+    margin:0;
+    background:#0d0e20;
+    color:#fff;
+    font-family:Arial,"Noto Sans Bengali",sans-serif;
+    padding-bottom:90px;
 }
 
 .header{
-  background:#17172f;
-  padding:22px 20px;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  border-bottom:1px solid #292947;
+    height:65px;
+    background:#17182d;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 18px;
+    position:sticky;
+    top:0;
+    z-index:20;
 }
 
 .logo{
-  font-size:28px;
-  font-weight:bold;
+    font-size:22px;
+    font-weight:bold;
 }
 
 .admin{
-  background:linear-gradient(90deg,#a63df0,#e82ca5);
-  padding:12px 22px;
-  border-radius:30px;
-  font-size:18px;
+    background:#a747ed;
+    padding:9px 15px;
+    border-radius:20px;
+    text-decoration:none;
+    color:#fff;
+}
+
+.search{
+    margin:18px;
+    height:48px;
+    background:#191a32;
+    border-radius:28px;
+    display:flex;
+    align-items:center;
+    padding:0 18px;
+    color:#999;
+}
+
+.search input{
+    flex:1;
+    background:none;
+    border:0;
+    outline:0;
+    color:#fff;
+    font-size:16px;
+}
+
+.search span{
+    background:#9d48ed;
+    width:42px;
+    height:42px;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:20px;
+}
+
+.tabs{
+    display:flex;
+    gap:10px;
+    overflow-x:auto;
+    padding:0 18px 18px;
+}
+
+.tab{
+    white-space:nowrap;
+    border:1px solid #2d2f4b;
+    padding:13px 24px;
+    border-radius:30px;
+    background:#17182d;
+    color:#ccc;
+    cursor:pointer;
+}
+
+.tab.active{
+    background:linear-gradient(90deg,#9b45ef,#ec3c9c);
+    color:white;
 }
 
 .container{
-  padding:20px;
-  max-width:700px;
-  margin:auto;
+    padding:0 18px;
+    max-width:700px;
+    margin:auto;
 }
 
 .card{
-  background:#191a35;
-  border:1px solid #303052;
-  border-radius:20px;
-  padding:20px;
-  margin-bottom:20px;
+    background:#191a31;
+    border:1px solid #2e3050;
+    border-radius:22px;
+    overflow:hidden;
+    margin-bottom:22px;
 }
 
-h2{
-  margin-top:0;
+.thumbnail{
+    position:relative;
+    width:100%;
+    aspect-ratio:16/9;
+    background:#25263d;
 }
 
-label{
-  display:block;
-  margin:15px 0 7px;
-  color:#ccc;
+.thumbnail img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
 }
 
-input,select,textarea{
-  width:100%;
-  padding:14px;
-  border:1px solid #3b3b60;
-  border-radius:12px;
-  background:#0f1025;
-  color:#fff;
-  font-size:16px;
-  outline:none;
+.play{
+    position:absolute;
+    left:50%;
+    top:50%;
+    transform:translate(-50%,-50%);
+    width:65px;
+    height:65px;
+    border-radius:50%;
+    background:#ffffff55;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-size:30px;
 }
 
-textarea{
-  min-height:100px;
-  resize:vertical;
+.like{
+    position:absolute;
+    right:15px;
+    top:15px;
+    width:48px;
+    height:48px;
+    border-radius:50%;
+    background:#4d4d15cc;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-size:25px;
+    cursor:pointer;
 }
 
-button{
-  width:100%;
-  margin-top:20px;
-  padding:15px;
-  border:0;
-  border-radius:14px;
-  background:linear-gradient(90deg,#a63df0,#e82ca5);
-  color:white;
-  font-size:17px;
-  font-weight:bold;
-  cursor:pointer;
+.info{
+    padding:17px;
 }
 
-button:hover{
-  opacity:.9;
+.title{
+    font-size:20px;
+    line-height:1.45;
+    font-weight:bold;
 }
 
-.video-item{
-  background:#101126;
-  padding:15px;
-  border-radius:14px;
-  margin-top:12px;
+.stats{
+    margin-top:12px;
+    color:#aaa;
 }
 
-.video-title{
-  font-size:18px;
-  font-weight:bold;
-  margin-bottom:8px;
+.actions{
+    display:flex;
+    gap:10px;
+    margin-top:17px;
 }
 
-.small{
-  color:#aaa;
-  font-size:14px;
-  word-break:break-all;
+.unlock{
+    flex:1;
+    border:0;
+    border-radius:14px;
+    padding:15px;
+    color:#fff;
+    font-size:17px;
+    font-weight:bold;
+    background:linear-gradient(90deg,#a34bee,#e6389b);
+    cursor:pointer;
 }
 
-.delete{
-  background:#d93656;
-  margin-top:10px;
+.link{
+    width:70px;
+    border:0;
+    border-radius:14px;
+    background:#272940;
+    color:#b657f5;
+    font-size:28px;
+    cursor:pointer;
+}
+
+.bottom{
+    position:fixed;
+    bottom:12px;
+    left:15px;
+    right:15px;
+    height:72px;
+    border-radius:25px;
+    background:#292b40;
+    display:flex;
+    justify-content:space-around;
+    align-items:center;
+    z-index:50;
+    box-shadow:0 5px 30px #0008;
+}
+
+.nav{
+    text-align:center;
+    color:#888;
+    font-size:12px;
+    cursor:pointer;
+}
+
+.nav-icon{
+    font-size:25px;
+    display:block;
+    margin-bottom:3px;
+}
+
+.nav.active{
+    color:#e342ae;
+}
+
+.empty{
+    text-align:center;
+    color:#888;
+    padding:50px 10px;
 }
 </style>
 </head>
 
 <body>
 
-<div class="header">
-  <div class="logo">🎬 Viral Link</div>
-  <div class="admin">Admin</div>
-</div>
+<header class="header">
 
-<div class="container">
+    <div class="logo">
+        🎬 Viral Link
+    </div>
 
-  <div class="card">
-    <h2>➕ নতুন ভিডিও যোগ করুন</h2>
+    <a href="admin.html" class="admin">
+        Admin
+    </a>
 
-    <label>ভিডিওর নাম</label>
-    <input id="title" type="text"
-           placeholder="যেমন: নতুন ভাইরাল ভিডিও">
+</header>
 
-    <label>ভিডিওর ছবি URL</label>
-    <input id="image" type="text"
-           placeholder="https://example.com/image.jpg">
 
-    <label>ভিডিও URL</label>
-    <input id="video" type="text"
-           placeholder="https://example.com/video">
+<div class="search">
 
-    <label>ক্যাটাগরি</label>
-    <select id="category">
-      <option value="viral">🔥 ভাইরাল লিংক</option>
-      <option value="tiktok">TikTok</option>
-      <option value="facebook">Facebook</option>
-      <option value="youtube">YouTube</option>
-    </select>
+    <input
+        id="searchInput"
+        type="text"
+        placeholder="ভিডিও খুঁজুন..."
+        oninput="searchVideos()">
 
-    <button onclick="addVideo()">ভিডিও যোগ করুন</button>
-  </div>
-
-  <div class="card">
-    <h2>📋 ভিডিও তালিকা</h2>
-    <div id="videoList"></div>
-  </div>
+    <span>⌕</span>
 
 </div>
+
+
+<div class="tabs">
+
+    <div class="tab active" onclick="filterVideos('all',this)">
+        All <b id="allCount">0</b>
+    </div>
+
+    <div class="tab" onclick="filterVideos('viral',this)">
+        🔥 ভাইরাল লিংক
+    </div>
+
+    <div class="tab" onclick="filterVideos('tiktok',this)">
+        TikTok Viral Link
+    </div>
+
+</div>
+
+
+<main class="container" id="videoList"></main>
+
+
+<nav class="bottom">
+
+    <div class="nav active">
+        <span class="nav-icon">⌂</span>
+        হোম
+    </div>
+
+    <div class="nav">
+        <span class="nav-icon">♥</span>
+        পছন্দ
+    </div>
+
+    <div class="nav">
+        <span class="nav-icon">▣</span>
+        ভিডিও
+    </div>
+
+    <div class="nav">
+        <span class="nav-icon">🔗</span>
+        লিংক
+    </div>
+
+</nav>
+
 
 <script>
 
+/* =========================
+   ADMIN থেকে ভিডিও নেওয়া
+========================= */
+
 let videos = JSON.parse(
-  localStorage.getItem("viralVideos") || "[]"
+    localStorage.getItem("viralVideos") || "[]"
 );
 
-function addVideo(){
 
-  const title =
-    document.getElementById("title").value.trim();
+/* =========================
+   কোনো ভিডিও না থাকলে
+========================= */
 
-  const image =
-    document.getElementById("image").value.trim();
+function renderVideos(){
 
-  const video =
-    document.getElementById("video").value.trim();
+    const box =
+        document.getElementById("videoList");
 
-  const category =
-    document.getElementById("category").value;
+    document.getElementById("allCount")
+        .innerText = videos.length;
 
-  if(!title || !image || !video){
+    box.innerHTML = "";
 
-    alert("সব তথ্য পূরণ করুন!");
+    if(videos.length === 0){
 
-    return;
-  }
+        box.innerHTML = `
+            <div class="empty">
+                এখনো কোনো ভিডিও যোগ করা হয়নি 😔
+                <br><br>
+                Admin Panel থেকে ভিডিও যোগ করুন।
+            </div>
+        `;
 
-  const newVideo = {
-    id:Date.now(),
-    title:title,
-    image:image,
-    video:video,
-    category:category,
-    views:0
-  };
+        return;
+    }
 
-  videos.unshift(newVideo);
+    videos.forEach(video => {
 
-  localStorage.setItem(
-    "viralVideos",
-    JSON.stringify(videos)
-  );
+        box.innerHTML += `
 
-  document.getElementById("title").value="";
-  document.getElementById("image").value="";
-  document.getElementById("video").value="";
+        <article class="card">
 
-  showVideos();
+            <div class="thumbnail">
 
-  alert("ভিডিও সফলভাবে যোগ হয়েছে ✅");
+                <img
+                    src="${video.image}"
+                    onerror="this.src='https://via.placeholder.com/800x450?text=Viral+Link'"
+                >
+
+                <div
+                    class="like"
+                    onclick="likeVideo(${video.id})">
+                    ♡
+                </div>
+
+                <div
+                    class="play"
+                    onclick="unlockVideo(${video.id})">
+                    ▶
+                </div>
+
+            </div>
+
+
+            <div class="info">
+
+                <div class="title">
+                    ${escapeHTML(video.title)}
+                </div>
+
+                <div class="stats">
+                    👁 ${video.views || 0}
+                </div>
+
+
+                <div class="actions">
+
+                    <button
+                        class="unlock"
+                        onclick="unlockVideo(${video.id})">
+
+                        ▶ UNLOCK
+                        (${video.unlock || 0}/3)
+
+                    </button>
+
+
+                    <button
+                        class="link"
+                        onclick="copyLink(${video.id})">
+
+                        🔗
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </article>
+
+        `;
+
+    });
+
 }
 
 
-function deleteVideo(id){
+/* =========================
+   UNLOCK
+========================= */
 
-  if(!confirm("ভিডিওটি মুছে ফেলবেন?")){
-    return;
-  }
+function unlockVideo(id){
 
-  videos = videos.filter(v => v.id !== id);
+    const video =
+        videos.find(v => v.id === id);
 
-  localStorage.setItem(
-    "viralVideos",
-    JSON.stringify(videos)
-  );
+    if(!video) return;
 
-  showVideos();
+    if(!video.unlock){
+        video.unlock = 0;
+    }
+
+    if(video.unlock < 3){
+
+        video.unlock++;
+
+        saveVideos();
+
+        renderVideos();
+
+    }
+
+    if(video.unlock === 3){
+
+        if(video.video){
+
+            window.open(
+                video.video,
+                "_blank"
+            );
+
+        }else{
+
+            alert("ভিডিও URL দেওয়া হয়নি।");
+
+        }
+
+    }
+
 }
 
 
-function showVideos(){
+/* =========================
+   LINK COPY
+========================= */
 
-  const list =
-    document.getElementById("videoList");
+function copyLink(id){
 
-  if(videos.length === 0){
+    const video =
+        videos.find(v => v.id === id);
 
-    list.innerHTML =
-      '<p style="color:#aaa">এখনো কোনো ভিডিও যোগ করা হয়নি।</p>';
+    if(!video) return;
 
-    return;
-  }
+    const link =
+        location.href.split("?")[0] +
+        "?video=" + video.id;
 
-  list.innerHTML = videos.map(v => `
+    navigator.clipboard.writeText(link)
+        .then(() => {
+            alert("ভিডিও লিংক কপি হয়েছে ✅");
+        })
+        .catch(() => {
+            alert("লিংক কপি করা যায়নি।");
+        });
 
-    <div class="video-item">
-
-      <div class="video-title">
-        ${escapeHTML(v.title)}
-      </div>
-
-      <div class="small">
-        Category: ${escapeHTML(v.category)}
-      </div>
-
-      <div class="small">
-        Views: ${v.views || 0}
-      </div>
-
-      <button
-        class="delete"
-        onclick="deleteVideo(${v.id})">
-        🗑️ Delete
-      </button>
-
-    </div>
-
-  `).join("");
 }
 
+
+/* =========================
+   LIKE
+========================= */
+
+function likeVideo(id){
+
+    alert("পছন্দে যোগ হয়েছে ❤️");
+
+}
+
+
+/* =========================
+   CATEGORY FILTER
+========================= */
+
+let currentCategory = "all";
+
+function filterVideos(category,element){
+
+    currentCategory = category;
+
+    document
+        .querySelectorAll(".tab")
+        .forEach(tab => {
+            tab.classList.remove("active");
+        });
+
+    element.classList.add("active");
+
+    searchVideos();
+
+}
+
+
+/* =========================
+   SEARCH
+========================= */
+
+function searchVideos(){
+
+    const keyword =
+        document
+        .getElementById("searchInput")
+        .value
+        .toLowerCase()
+        .trim();
+
+    const box =
+        document.getElementById("videoList");
+
+    let filtered = videos.filter(video => {
+
+        const title =
+            (video.title || "")
+            .toLowerCase();
+
+        const category =
+            (video.category || "")
+            .toLowerCase();
+
+        const matchSearch =
+            title.includes(keyword);
+
+        const matchCategory =
+            currentCategory === "all" ||
+            category === currentCategory;
+
+        return matchSearch && matchCategory;
+
+    });
+
+    box.innerHTML = "";
+
+    if(filtered.length === 0){
+
+        box.innerHTML = `
+            <div class="empty">
+                কোনো ভিডিও পাওয়া যায়নি 😔
+            </div>
+        `;
+
+        return;
+    }
+
+    filtered.forEach(video => {
+
+        box.innerHTML += `
+
+        <article class="card">
+
+            <div class="thumbnail">
+
+                <img
+                    src="${video.image}"
+                    onerror="this.src='https://via.placeholder.com/800x450?text=Viral+Link'"
+                >
+
+                <div
+                    class="like"
+                    onclick="likeVideo(${video.id})">
+                    ♡
+                </div>
+
+                <div
+                    class="play"
+                    onclick="unlockVideo(${video.id})">
+                    ▶
+                </div>
+
+            </div>
+
+            <div class="info">
+
+                <div class="title">
+                    ${escapeHTML(video.title)}
+                </div>
+
+                <div class="stats">
+                    👁 ${video.views || 0}
+                </div>
+
+                <div class="actions">
+
+                    <button
+                        class="unlock"
+                        onclick="unlockVideo(${video.id})">
+
+                        ▶ UNLOCK
+                        (${video.unlock || 0}/3)
+
+                    </button>
+
+                    <button
+                        class="link"
+                        onclick="copyLink(${video.id})">
+
+                        🔗
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </article>
+
+        `;
+
+    });
+
+}
+
+
+/* =========================
+   SAVE
+========================= */
+
+function saveVideos(){
+
+    localStorage.setItem(
+        "viralVideos",
+        JSON.stringify(videos)
+    );
+
+}
+
+
+/* =========================
+   নিরাপদ TEXT
+========================= */
 
 function escapeHTML(text){
 
-  return text
-    .replaceAll("&","&amp;")
-    .replaceAll("<","&lt;")
-    .replaceAll(">","&gt;")
-    .replaceAll('"',"&quot;")
-    .replaceAll("'","&#039;");
+    return String(text)
+        .replaceAll("&","&amp;")
+        .replaceAll("<","&lt;")
+        .replaceAll(">","&gt;")
+        .replaceAll('"',"&quot;")
+        .replaceAll("'","&#039;");
+
 }
 
 
-showVideos();
+/* =========================
+   START
+========================= */
+
+renderVideos();
 
 </script>
 

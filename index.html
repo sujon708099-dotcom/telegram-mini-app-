@@ -3,639 +3,260 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-
 <title>SM Viral Link</title>
 
 <style>
-*{
-  box-sizing:border-box;
-  -webkit-tap-highlight-color:transparent;
-}
-
+*{box-sizing:border-box}
 body{
-  margin:0;
-  background:#0d0e21;
-  color:#fff;
-  font-family:Arial,"Noto Sans Bengali",sans-serif;
-  padding-bottom:95px;
+ margin:0;
+ background:#0d0e21;
+ color:#fff;
+ font-family:Arial,"Noto Sans Bengali",sans-serif;
+ padding-bottom:100px
 }
-
 .header{
-  height:64px;
-  padding:0 16px;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  background:#17182d;
-  border-bottom:1px solid #292b47;
-  position:sticky;
-  top:0;
-  z-index:100;
+ height:65px;
+ background:#17182d;
+ display:flex;
+ align-items:center;
+ justify-content:space-between;
+ padding:0 20px;
+ border-bottom:1px solid #292b47;
+ position:sticky;
+ top:0;
+ z-index:20
 }
-
-.logo{
-  font-size:22px;
-  font-weight:bold;
+.logo{font-size:24px;font-weight:bold}
+.admin{
+ background:#a946ef;
+ color:white;
+ text-decoration:none;
+ padding:9px 15px;
+ border-radius:20px
 }
-
-.menu{
-  font-size:28px;
-  cursor:pointer;
+.search{
+ margin:18px;
+ height:52px;
+ border-radius:30px;
+ background:#191a34;
+ border:1px solid #303252;
+ display:flex;
+ align-items:center;
+ padding-left:20px
 }
-
-.search-box{
-  margin:18px 16px;
-  height:52px;
-  border-radius:30px;
-  background:#1b1c35;
-  border:1px solid #303252;
-  display:flex;
-  align-items:center;
-  padding-left:20px;
-  color:#aaa;
+.search input{
+ flex:1;
+ height:100%;
+ background:none;
+ border:0;
+ outline:0;
+ color:white;
+ font-size:16px
 }
-
-.search-box input{
-  flex:1;
-  height:100%;
-  border:0;
-  outline:0;
-  background:transparent;
-  color:white;
-  font-size:15px;
+.search button{
+ width:52px;
+ height:52px;
+ border:0;
+ border-radius:50%;
+ background:linear-gradient(135deg,#9c48ef,#e13c9f);
+ color:white;
+ font-size:25px
 }
-
-.search-icon{
-  width:50px;
-  height:50px;
-  border-radius:50%;
-  background:linear-gradient(135deg,#9d48ef,#7540e8);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:24px;
-}
-
 .tabs{
-  display:flex;
-  gap:10px;
-  overflow-x:auto;
-  padding:0 16px 18px;
-  scrollbar-width:none;
+ display:flex;
+ gap:10px;
+ overflow-x:auto;
+ padding:0 18px 18px
 }
-
-.tabs::-webkit-scrollbar{
-  display:none;
-}
-
 .tab{
-  flex-shrink:0;
-  padding:13px 22px;
-  border-radius:28px;
-  border:1px solid #30314d;
-  background:#17182d;
-  color:#bbb;
-  cursor:pointer;
+ flex-shrink:0;
+ padding:13px 22px;
+ border-radius:28px;
+ border:1px solid #30314d;
+ background:#17182d;
+ color:#bbb
 }
-
 .tab.active{
-  background:linear-gradient(90deg,#a847ee,#e83d9c);
-  color:#fff;
-  border-color:transparent;
+ background:linear-gradient(90deg,#a946ef,#e33c9e);
+ color:white
 }
-
 .container{
-  max-width:700px;
-  margin:auto;
-  padding:0 14px;
+ max-width:700px;
+ margin:auto;
+ padding:0 15px
 }
-
 .card{
-  background:#191a31;
-  border:1px solid #30314c;
-  border-radius:20px;
-  overflow:hidden;
-  margin-bottom:22px;
-  box-shadow:0 8px 25px #0004;
+ background:#191a31;
+ border:1px solid #30314c;
+ border-radius:22px;
+ overflow:hidden;
+ margin-bottom:22px;
+ box-shadow:0 8px 25px #0005
 }
-
-.video-area{
-  position:relative;
-  background:#000;
+.video{
+ width:100%;
+ display:block;
+ background:#000;
+ aspect-ratio:16/9
 }
-
-.video-area video{
-  width:100%;
-  display:block;
-  aspect-ratio:16/9;
-  object-fit:cover;
-}
-
-.like{
-  position:absolute;
-  top:14px;
-  right:14px;
-  width:48px;
-  height:48px;
-  border-radius:50%;
-  background:#575819dd;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  font-size:27px;
-  cursor:pointer;
-}
-
-.like.liked{
-  color:#ff4c88;
-}
-
-.info{
-  padding:16px;
-}
-
+.info{padding:16px}
 .title{
-  font-size:20px;
-  font-weight:bold;
-  line-height:1.45;
+ font-size:20px;
+ font-weight:bold;
+ line-height:1.45
 }
-
-.views{
-  color:#999;
-  margin-top:10px;
-  font-size:14px;
-}
-
+.views{color:#999;margin-top:10px}
 .actions{
-  display:flex;
-  gap:10px;
-  margin-top:16px;
+ display:flex;
+ gap:10px;
+ margin-top:16px
 }
-
 .unlock{
-  flex:1;
-  height:52px;
-  border:0;
-  border-radius:13px;
-  background:linear-gradient(90deg,#a746ed,#e73d9e);
-  color:white;
-  font-size:17px;
-  font-weight:bold;
-  cursor:pointer;
+ flex:1;
+ height:52px;
+ border:0;
+ border-radius:14px;
+ background:linear-gradient(90deg,#a946ef,#e43c9e);
+ color:white;
+ font-size:17px;
+ font-weight:bold
 }
-
-.link-btn{
-  width:70px;
-  border:0;
-  border-radius:13px;
-  background:#292b42;
-  color:#b04cf1;
-  font-size:25px;
-  cursor:pointer;
+.link{
+ width:70px;
+ border:0;
+ border-radius:14px;
+ background:#292b43;
+ color:#9fd4eb;
+ font-size:26px
 }
-
-.bottom-nav{
-  position:fixed;
-  left:12px;
-  right:12px;
-  bottom:10px;
-  height:72px;
-  background:#292b40;
-  border:1px solid #393b55;
-  border-radius:25px;
-  display:flex;
-  justify-content:space-around;
-  align-items:center;
-  z-index:200;
-  box-shadow:0 8px 30px #0009;
+.bottom{
+ position:fixed;
+ bottom:10px;
+ left:12px;
+ right:12px;
+ height:72px;
+ background:#292b40;
+ border:1px solid #3a3c56;
+ border-radius:25px;
+ display:flex;
+ justify-content:space-around;
+ align-items:center;
+ z-index:30
 }
-
-.nav-item{
-  text-align:center;
-  color:#85879b;
-  font-size:12px;
-  cursor:pointer;
+.nav{
+ text-align:center;
+ color:#85879b;
+ font-size:12px
 }
-
-.nav-icon{
-  display:block;
-  font-size:26px;
-  margin-bottom:3px;
+.nav span{
+ display:block;
+ font-size:25px;
+ margin-bottom:3px
 }
-
-.nav-item.active{
-  color:#ed3ca5;
-}
-
-.empty{
-  text-align:center;
-  color:#888;
-  padding:50px 10px;
-}
-
-/* ছোট স্ক্রিন */
-@media(max-width:380px){
-  .title{
-    font-size:17px;
-  }
-
-  .tab{
-    padding:11px 17px;
-  }
-}
+.nav.active{color:#ec3da6}
+.empty{text-align:center;padding:50px;color:#888}
 </style>
 </head>
 
 <body>
 
 <header class="header">
-  <div class="logo">🎬 SM Viral Link</div>
-  <div class="menu">⋮</div>
+ <div class="logo">🎬 SM Viral Link</div>
+ <a class="admin" href="admin.html">Admin</a>
 </header>
 
-
-<div class="search-box">
-
-  <input
-    id="search"
-    type="text"
-    placeholder="ভিডিও খুঁজুন..."
-    oninput="searchVideos()"
-  >
-
-  <div class="search-icon">⌕</div>
-
+<div class="search">
+ <input id="search" placeholder="ভিডিও খুঁজুন...">
+ <button>⌕</button>
 </div>
-
 
 <div class="tabs">
-
-  <div class="tab active"
-       onclick="changeCategory('all',this)">
-    All <span id="allCount">0</span>
-  </div>
-
-  <div class="tab"
-       onclick="changeCategory('viral',this)">
-    ভাইরাল লিংক <span id="viralCount">0</span>
-  </div>
-
-  <div class="tab"
-       onclick="changeCategory('tiktok',this)">
-    TikTok Viral Link <span id="tiktokCount">0</span>
-  </div>
-
+ <div class="tab active" data-cat="all">All <b id="all">0</b></div>
+ <div class="tab" data-cat="viral">ভাইরাল লিংক <b id="viral">0</b></div>
+ <div class="tab" data-cat="tiktok">TikTok Viral Link <b id="tiktok">0</b></div>
 </div>
 
+<main class="container" id="list"></main>
 
-<main id="videoList" class="container"></main>
-
-
-<nav class="bottom-nav">
-
-  <div class="nav-item active"
-       onclick="bottomNav(this)">
-    <span class="nav-icon">⌂</span>
-    হোম
-  </div>
-
-  <div class="nav-item"
-       onclick="bottomNav(this)">
-    <span class="nav-icon">♥</span>
-    পছন্দ
-  </div>
-
-  <div class="nav-item"
-       onclick="bottomNav(this)">
-    <span class="nav-icon">▣</span>
-    ভিডিও
-  </div>
-
-  <div class="nav-item"
-       onclick="bottomNav(this)">
-    <span class="nav-icon">🔗</span>
-    লিংক
-  </div>
-
+<nav class="bottom">
+ <div class="nav active"><span>⌂</span>হোম</div>
+ <div class="nav"><span>♥</span>পছন্দ</div>
+ <div class="nav"><span>▣</span>ভিডিও</div>
+ <div class="nav"><span>🔗</span>লিংক</div>
 </nav>
 
+<script type="module">
 
-<script>
+import {
+ initializeApp
+} from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
 
-/* =========================
-   ভিডিও ডাটা
-========================= */
-
-const videos = [
-
-  {
-    id:1,
-    title:"আজকের জনপ্রিয় ভিডিও",
-    category:"viral",
-    video:"https://www.w3schools.com/html/mov_bbb.mp4",
-    views:17,
-    unlock:0
-  },
-
-  {
-    id:2,
-    title:"নতুন ট্রেন্ডিং ভিডিও",
-    category:"tiktok",
-    video:"https://www.w3schools.com/html/movie.mp4",
-    views:32,
-    unlock:1
-  },
-
-  {
-    id:3,
-    title:"আজকের ভাইরাল ভিডিও",
-    category:"viral",
-    video:"https://www.w3schools.com/html/mov_bbb.mp4",
-    views:54,
-    unlock:2
-  }
-
-];
-
-
-let currentCategory = "all";
+import {
+ getFirestore,
+ collection,
+ getDocs,
+ doc,
+ updateDoc,
+ increment
+} from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
 
 
 /* =========================
-   ভিডিও দেখানো
+   তোমার Firebase Config
 ========================= */
 
-function renderVideos(list = videos){
+const firebaseConfig = {
 
-  const box =
-    document.getElementById("videoList");
+ apiKey:"YOUR_API_KEY",
 
-  box.innerHTML = "";
+ authDomain:"YOUR_PROJECT.firebaseapp.com",
 
-  if(list.length === 0){
+ projectId:"YOUR_PROJECT_ID",
 
-    box.innerHTML =
-      `<div class="empty">
-        কোনো ভিডিও পাওয়া যায়নি।
-       </div>`;
+ storageBucket:"YOUR_PROJECT.firebasestorage.app",
 
-    return;
-  }
+ messagingSenderId:"YOUR_SENDER_ID",
 
+ appId:"YOUR_APP_ID"
 
-  list.forEach(video => {
-
-    box.innerHTML += `
-
-      <article class="card">
-
-        <div class="video-area">
-
-          <video
-            controls
-            preload="metadata"
-            src="${video.video}"
-            onclick="addView(${video.id})">
-          </video>
-
-          <div
-            class="like"
-            onclick="likeVideo(this)">
-            ♡
-          </div>
-
-        </div>
+};
 
 
-        <div class="info">
+const app = initializeApp(firebaseConfig);
 
-          <div class="title">
-            ${escapeHTML(video.title)}
-          </div>
-
-          <div class="views">
-            👁 ${video.views}
-          </div>
+const db = getFirestore(app);
 
 
-          <div class="actions">
-
-            <button
-              class="unlock"
-              onclick="unlockVideo(${video.id})">
-
-              ▶ UNLOCK (${video.unlock}/3)
-
-            </button>
-
-
-            <button
-              class="link-btn"
-              onclick="copyVideoLink(${video.id})">
-
-              🔗
-
-            </button>
-
-          </div>
-
-        </div>
-
-      </article>
-
-    `;
-
-  });
-
-}
+let videos=[];
+let category="all";
 
 
 /* =========================
-   Unlock
+   Load Videos
 ========================= */
 
-function unlockVideo(id){
+async function loadVideos(){
 
-  const video =
-    videos.find(v => v.id === id);
+ const snap =
+   await getDocs(collection(db,"videos"));
 
-  if(!video) return;
+ videos=[];
 
+ snap.forEach(item=>{
 
-  if(video.unlock < 3){
+   videos.push({
+     id:item.id,
+     ...item.data()
+   });
 
-    video.unlock++;
+ });
 
-    renderVideos();
+ videos.sort((a,b)=>
+   (b.createdAt || 0)-(a.createdAt || 0)
+ );
 
-  }
-
-
-  if(video.unlock === 3){
-
-    alert("ভিডিওটি আনলক হয়েছে!");
-
-  }
-
-}
-
-
-/* =========================
-   View
-========================= */
-
-function addView(id){
-
-  const video =
-    videos.find(v => v.id === id);
-
-  if(video){
-
-    video.views++;
-
-    renderVideos();
-
-  }
-
-}
-
-
-/* =========================
-   Like
-========================= */
-
-function likeVideo(button){
-
-  button.classList.toggle("liked");
-
-  button.innerHTML =
-    button.classList.contains("liked")
-    ? "♥"
-    : "♡";
-
-}
-
-
-/* =========================
-   Link Copy
-========================= */
-
-function copyVideoLink(id){
-
-  const link =
-    location.href.split("#")[0] +
-    "#video-" + id;
-
-  navigator.clipboard.writeText(link)
-    .then(() => {
-
-      alert("ভিডিও লিংক কপি হয়েছে!");
-
-    });
-
-}
-
-
-/* =========================
-   Category
-========================= */
-
-function changeCategory(category, element){
-
-  currentCategory = category;
-
-
-  document
-    .querySelectorAll(".tab")
-    .forEach(tab =>
-      tab.classList.remove("active")
-    );
-
-
-  element.classList.add("active");
-
-
-  if(category === "all"){
-
-    renderVideos(videos);
-
-  }else{
-
-    renderVideos(
-      videos.filter(v =>
-        v.category === category
-      )
-    );
-
-  }
-
-}
-
-
-/* =========================
-   Search
-========================= */
-
-function searchVideos(){
-
-  const text =
-    document
-      .getElementById("search")
-      .value
-      .toLowerCase();
-
-
-  let result = videos.filter(video =>
-    video.title
-      .toLowerCase()
-      .includes(text)
-  );
-
-
-  if(currentCategory !== "all"){
-
-    result =
-      result.filter(video =>
-        video.category === currentCategory
-      );
-
-  }
-
-
-  renderVideos(result);
-
-}
-
-
-/* =========================
-   Bottom Navigation
-========================= */
-
-function bottomNav(element){
-
-  document
-    .querySelectorAll(".nav-item")
-    .forEach(item =>
-      item.classList.remove("active")
-    );
-
-  element.classList.add("active");
-
-}
-
-
-/* =========================
-   নিরাপদ HTML
-========================= */
-
-function escapeHTML(text){
-
-  return String(text)
-    .replace(/&/g,"&amp;")
-    .replace(/</g,"&lt;")
-    .replace(/>/g,"&gt;")
-    .replace(/"/g,"&quot;")
-    .replace(/'/g,"&#039;");
+ updateCounters();
+ render();
 
 }
 
@@ -644,25 +265,237 @@ function escapeHTML(text){
    Counter
 ========================= */
 
-document.getElementById("allCount")
-  .innerText = videos.length;
+function updateCounters(){
 
-document.getElementById("viralCount")
-  .innerText =
-  videos.filter(v =>
-    v.category === "viral"
-  ).length;
+ document.getElementById("all")
+   .innerText=videos.length;
 
-document.getElementById("tiktokCount")
-  .innerText =
-  videos.filter(v =>
-    v.category === "tiktok"
-  ).length;
+ document.getElementById("viral")
+   .innerText=
+   videos.filter(v=>v.category==="viral").length;
+
+ document.getElementById("tiktok")
+   .innerText=
+   videos.filter(v=>v.category==="tiktok").length;
+
+}
 
 
-/* প্রথমবার ভিডিও দেখানো */
+/* =========================
+   Render
+========================= */
 
-renderVideos();
+function render(){
+
+ const search=
+   document.getElementById("search")
+   .value.toLowerCase();
+
+ let result=videos.filter(v=>
+
+   (category==="all" ||
+    v.category===category)
+
+   &&
+
+   String(v.title || "")
+   .toLowerCase()
+   .includes(search)
+
+ );
+
+ const list=document.getElementById("list");
+
+ list.innerHTML="";
+
+ if(!result.length){
+
+   list.innerHTML=
+   `<div class="empty">
+      কোনো ভিডিও পাওয়া যায়নি।
+    </div>`;
+
+   return;
+ }
+
+
+ result.forEach(v=>{
+
+   list.innerHTML += `
+
+   <article class="card">
+
+     <video
+       class="video"
+       controls
+       preload="metadata"
+       src="${v.videoUrl}"
+       data-id="${v.id}">
+     </video>
+
+     <div class="info">
+
+       <div class="title">
+         ${safe(v.title)}
+       </div>
+
+       <div class="views">
+         👁 ${Number(v.views || 0)}
+       </div>
+
+       <div class="actions">
+
+         <button
+           class="unlock"
+           onclick="unlock('${v.id}')">
+
+           ▶ UNLOCK (${Number(v.unlock || 0)}/3)
+
+         </button>
+
+         <button
+           class="link"
+           onclick="copyLink('${v.id}')">
+
+           🔗
+
+         </button>
+
+       </div>
+
+     </div>
+
+   </article>
+
+   `;
+
+ });
+
+
+ document
+ .querySelectorAll(".video")
+ .forEach(video=>{
+
+   video.addEventListener("play",()=>{
+
+     const id=video.dataset.id;
+
+     updateDoc(
+       doc(db,"videos",id),
+       {views:increment(1)}
+     );
+
+   },{once:true});
+
+ });
+
+}
+
+
+/* =========================
+   Unlock Counter
+========================= */
+
+window.unlock=async function(id){
+
+ const video=
+   videos.find(v=>v.id===id);
+
+ if(!video)return;
+
+ let count=Number(video.unlock || 0);
+
+ if(count<3){
+
+   count++;
+
+   await updateDoc(
+     doc(db,"videos",id),
+     {unlock:count}
+   );
+
+   video.unlock=count;
+
+   render();
+
+ }
+
+ if(count===3){
+
+   alert("ভিডিও আনলক হয়েছে!");
+
+ }
+
+};
+
+
+/* =========================
+   Copy Link
+========================= */
+
+window.copyLink=function(id){
+
+ const url=
+   location.origin+
+   location.pathname+
+   "?video="+id;
+
+ navigator.clipboard
+   .writeText(url)
+   .then(()=>alert("লিংক কপি হয়েছে!"));
+
+};
+
+
+/* =========================
+   Search
+========================= */
+
+document
+.getElementById("search")
+.addEventListener("input",render);
+
+
+/* =========================
+   Category
+========================= */
+
+document
+.querySelectorAll(".tab")
+.forEach(tab=>{
+
+ tab.onclick=()=>{
+
+   document
+   .querySelectorAll(".tab")
+   .forEach(x=>
+     x.classList.remove("active")
+   );
+
+   tab.classList.add("active");
+
+   category=tab.dataset.cat;
+
+   render();
+
+ };
+
+});
+
+
+function safe(text){
+
+ return String(text || "")
+ .replace(/&/g,"&amp;")
+ .replace(/</g,"&lt;")
+ .replace(/>/g,"&gt;")
+ .replace(/"/g,"&quot;")
+ .replace(/'/g,"&#039;");
+
+}
+
+
+loadVideos();
 
 </script>
 

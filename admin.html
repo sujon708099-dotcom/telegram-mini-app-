@@ -1,0 +1,905 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>SM Viral Link - Admin Panel</title>
+
+<style>
+*{box-sizing:border-box}
+
+body{
+  margin:0;
+  background:#0d0e21;
+  color:#fff;
+  font-family:Arial,"Noto Sans Bengali",sans-serif;
+  padding:20px;
+}
+
+.container{
+  max-width:700px;
+  margin:auto;
+}
+
+.header{
+  background:#17182d;
+  border:1px solid #303252;
+  border-radius:20px;
+  padding:20px;
+  margin-bottom:20px;
+}
+
+.header h1{
+  margin:0;
+  font-size:24px;
+}
+
+.card{
+  background:#191a31;
+  border:1px solid #30314c;
+  border-radius:20px;
+  padding:20px;
+  margin-bottom:20px;
+}
+
+h2{
+  margin-top:0;
+}
+
+input,select{
+  width:100%;
+  height:50px;
+  margin:8px 0 15px;
+  padding:0 15px;
+  border-radius:12px;
+  border:1px solid #383a59;
+  background:#101126;
+  color:#fff;
+  font-size:16px;
+}
+
+button{
+  border:0;
+  border-radius:12px;
+  padding:13px 18px;
+  color:#fff;
+  font-size:16px;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+.loginBtn,
+.uploadBtn{
+  width:100%;
+  background:linear-gradient(90deg,#a946ef,#e43c9e);
+}
+
+.logout{
+  background:#34364e;
+}
+
+.delete{
+  background:#b83250;
+  margin-top:10px;
+}
+
+.videoItem{
+  background:#111226;
+  border:1px solid #30314c;
+  border-radius:15px;
+  padding:15px;
+  margin-top:12px;
+}
+
+.videoItem video{
+  width:100%;
+  max-height:300px;
+  background:#000;
+  border-radius:12px;
+}
+
+.videoTitle{
+  font-size:18px;
+  font-weight:bold;
+  margin:12px 0 6px;
+}
+
+.small{
+  color:#999;
+  font-size:14px;
+  margin-top:5px;
+}
+
+#adminPanel{
+  display:none;
+}
+
+.message{
+  margin-top:15px;
+  text-align:center;
+  color:#b8b8c8;
+}
+
+.progress{
+  width:100%;
+  height:10px;
+  background:#292b43;
+  border-radius:10px;
+  overflow:hidden;
+  margin:15px 0;
+  display:none;
+}
+
+.progressBar{
+  width:0%;
+  height:100%;
+  background:#a946ef;
+}
+
+.empty{
+  color:#888;
+  text-align:center;
+  padding:20px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="header">
+  <h1>🎬 SM Viral Link — Admin Panel</h1>
+</div>
+
+
+<!-- LOGIN -->
+
+<div class="card" id="loginBox">
+
+  <h2>🔐 Admin Login</h2>
+
+  <input
+    type="email"
+    id="email"
+    placeholder="Admin Email">
+
+  <input
+    type="password"
+    id="password"
+    placeholder="Password">
+
+  <button
+    class="loginBtn"
+    id="loginBtn">
+    Login
+  </button>
+
+  <div
+    class="message"
+    id="loginMessage">
+  </div>
+
+</div>
+
+
+<!-- ADMIN PANEL -->
+
+<div id="adminPanel">
+
+
+<!-- UPLOAD -->
+
+<div class="card">
+
+<h2>📤 ভিডিও আপলোড</h2>
+
+<label>ভিডিওর নাম</label>
+
+<input
+  type="text"
+  id="title"
+  placeholder="ভিডিওর নাম লিখুন">
+
+
+<label>ক্যাটাগরি</label>
+
+<select id="category">
+
+<option value="viral">
+ভাইরাল লিংক
+</option>
+
+<option value="tiktok">
+TikTok Viral Link
+</option>
+
+</select>
+
+
+<label>ভিডিও নির্বাচন করুন</label>
+
+<input
+  type="file"
+  id="videoFile"
+  accept="video/*">
+
+
+<div
+  class="progress"
+  id="progress">
+
+<div
+  class="progressBar"
+  id="progressBar">
+</div>
+
+</div>
+
+
+<button
+  class="uploadBtn"
+  id="uploadBtn">
+
+📤 Upload Video
+
+</button>
+
+
+<div
+  class="message"
+  id="message">
+</div>
+
+</div>
+
+
+<!-- LOGOUT -->
+
+<div class="card">
+
+<button
+  class="logout"
+  id="logoutBtn">
+
+🚪 Logout
+
+</button>
+
+</div>
+
+
+<!-- VIDEO LIST -->
+
+<div class="card">
+
+<h2>📋 আপলোড করা ভিডিও</h2>
+
+<div id="videoList">
+
+<div class="empty">
+ভিডিও লোড হচ্ছে...
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+
+<script type="module">
+
+/* ================================
+   Firebase SDK
+================================ */
+
+import {
+  initializeApp
+} from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
+
+
+import {
+  getAuth,
+  signInWithEmailAndPassword,
+  onAuthStateChanged,
+  signOut
+} from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
+
+
+import {
+  getFirestore,
+  collection,
+  addDoc,
+  getDocs,
+  deleteDoc,
+  doc
+} from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
+
+
+import {
+  getStorage,
+  ref,
+  uploadBytesResumable,
+  getDownloadURL,
+  deleteObject
+} from "https://www.gstatic.com/firebasejs/12.1.0/firebase-storage.js";
+
+
+/* =================================
+   🔥 তোমার Firebase Config
+   এখানে তোমার দেওয়া Config বসানো আছে
+================================= */
+
+const firebaseConfig = {
+  apiKey: "AIzaSyCK_Z7sFC8V9is54NkLF5yI_exMZKDjw8E",
+  authDomain: "viralvideobd2.firebaseapp.com",
+  projectId: "viralvideobd2",
+  storageBucket: "viralvideobd2.firebasestorage.app",
+  messagingSenderId: "599947851397",
+  appId: "1:599947851397:web:e0c3d300e979c4d2525bec",
+  measurementId: "G-Q3XKZWSQ6F"
+};
+
+
+/* ================================
+   Firebase চালু
+================================ */
+
+const app =
+  initializeApp(firebaseConfig);
+
+const auth =
+  getAuth(app);
+
+const db =
+  getFirestore(app);
+
+const storage =
+  getStorage(app);
+
+
+/* ================================
+   Elements
+================================ */
+
+const loginBox =
+  document.getElementById("loginBox");
+
+const adminPanel =
+  document.getElementById("adminPanel");
+
+const loginMessage =
+  document.getElementById("loginMessage");
+
+const message =
+  document.getElementById("message");
+
+const videoList =
+  document.getElementById("videoList");
+
+const progress =
+  document.getElementById("progress");
+
+const progressBar =
+  document.getElementById("progressBar");
+
+
+/* ================================
+   Login
+================================ */
+
+document
+.getElementById("loginBtn")
+.addEventListener("click",async()=>{
+
+  const email =
+    document
+    .getElementById("email")
+    .value
+    .trim();
+
+  const password =
+    document
+    .getElementById("password")
+    .value;
+
+
+  if(!email || !password){
+
+    loginMessage.innerText =
+      "Email এবং Password দিন।";
+
+    return;
+  }
+
+
+  loginMessage.innerText =
+    "Login হচ্ছে...";
+
+
+  try{
+
+    await signInWithEmailAndPassword(
+      auth,
+      email,
+      password
+    );
+
+    loginMessage.innerText =
+      "✅ Login সফল হয়েছে।";
+
+  }
+
+  catch(error){
+
+    console.error(error);
+
+    loginMessage.innerText =
+      "❌ Login ব্যর্থ হয়েছে। Email/Password পরীক্ষা করুন।";
+
+  }
+
+});
+
+
+/* ================================
+   Login Check
+================================ */
+
+onAuthStateChanged(
+  auth,
+  user=>{
+
+    if(user){
+
+      loginBox.style.display =
+        "none";
+
+      adminPanel.style.display =
+        "block";
+
+      loadVideos();
+
+    }
+    else{
+
+      loginBox.style.display =
+        "block";
+
+      adminPanel.style.display =
+        "none";
+
+    }
+
+  }
+);
+
+
+/* ================================
+   Logout
+================================ */
+
+document
+.getElementById("logoutBtn")
+.addEventListener("click",async()=>{
+
+  await signOut(auth);
+
+});
+
+
+/* ================================
+   Upload Video
+================================ */
+
+document
+.getElementById("uploadBtn")
+.addEventListener("click",async()=>{
+
+  const title =
+    document
+    .getElementById("title")
+    .value
+    .trim();
+
+  const category =
+    document
+    .getElementById("category")
+    .value;
+
+  const file =
+    document
+    .getElementById("videoFile")
+    .files[0];
+
+
+  if(!title){
+
+    message.innerText =
+      "ভিডিওর নাম লিখুন।";
+
+    return;
+  }
+
+
+  if(!file){
+
+    message.innerText =
+      "একটি ভিডিও নির্বাচন করুন।";
+
+    return;
+  }
+
+
+  if(!file.type.startsWith("video/")){
+
+    message.innerText =
+      "শুধু ভিডিও ফাইল নির্বাচন করুন।";
+
+    return;
+  }
+
+
+  try{
+
+    message.innerText =
+      "ভিডিও Upload হচ্ছে...";
+
+    progress.style.display =
+      "block";
+
+    progressBar.style.width =
+      "0%";
+
+
+    const fileName =
+      Date.now() +
+      "_" +
+      file.name.replace(
+        /[^a-zA-Z0-9._-]/g,
+        "_"
+      );
+
+
+    const storageRef =
+      ref(
+        storage,
+        "videos/" + fileName
+      );
+
+
+    const uploadTask =
+      uploadBytesResumable(
+        storageRef,
+        file
+      );
+
+
+    uploadTask.on(
+
+      "state_changed",
+
+      snapshot=>{
+
+        const percent =
+          (
+            snapshot.bytesTransferred /
+            snapshot.totalBytes
+          ) * 100;
+
+        progressBar.style.width =
+          percent + "%";
+
+      },
+
+
+      error=>{
+
+        console.error(error);
+
+        message.innerText =
+          "❌ Upload ব্যর্থ হয়েছে।";
+
+        progress.style.display =
+          "none";
+
+      },
+
+
+      async()=>{
+
+        const videoUrl =
+          await getDownloadURL(
+            uploadTask.snapshot.ref
+          );
+
+
+        await addDoc(
+          collection(db,"videos"),
+          {
+
+            title:title,
+
+            category:category,
+
+            videoUrl:videoUrl,
+
+            storagePath:
+              "videos/" + fileName,
+
+            views:0,
+
+            unlock:0,
+
+            createdAt:
+              Date.now()
+
+          }
+        );
+
+
+        message.innerText =
+          "✅ ভিডিও সফলভাবে Upload হয়েছে!";
+
+
+        document
+        .getElementById("title")
+        .value = "";
+
+        document
+        .getElementById("videoFile")
+        .value = "";
+
+
+        progressBar.style.width =
+          "100%";
+
+
+        loadVideos();
+
+      }
+
+    );
+
+  }
+
+  catch(error){
+
+    console.error(error);
+
+    message.innerText =
+      "❌ কিছু সমস্যা হয়েছে।";
+
+  }
+
+});
+
+
+/* ================================
+   Load Videos
+================================ */
+
+async function loadVideos(){
+
+  videoList.innerHTML =
+    `<div class="empty">
+      ভিডিও লোড হচ্ছে...
+    </div>`;
+
+
+  try{
+
+    const snapshot =
+      await getDocs(
+        collection(db,"videos")
+      );
+
+
+    videoList.innerHTML =
+      "";
+
+
+    if(snapshot.empty){
+
+      videoList.innerHTML =
+        `<div class="empty">
+          এখনো কোনো ভিডিও Upload করা হয়নি।
+        </div>`;
+
+      return;
+
+    }
+
+
+    const videos=[];
+
+
+    snapshot.forEach(item=>{
+
+      videos.push({
+
+        id:item.id,
+
+        ...item.data()
+
+      });
+
+    });
+
+
+    videos.sort(
+      (a,b)=>
+        (b.createdAt || 0) -
+        (a.createdAt || 0)
+    );
+
+
+    videos.forEach(video=>{
+
+      const item =
+        document.createElement("div");
+
+      item.className =
+        "videoItem";
+
+
+      item.innerHTML = `
+
+        <video
+          controls
+          preload="metadata"
+          src="${safe(video.videoUrl)}">
+        </video>
+
+        <div class="videoTitle">
+          ${safe(video.title)}
+        </div>
+
+        <div class="small">
+          👁 Views: ${Number(video.views || 0)}
+        </div>
+
+        <div class="small">
+          📂 Category:
+          ${safe(video.category)}
+        </div>
+
+        <button
+          class="delete"
+          data-id="${video.id}">
+          🗑 Delete
+        </button>
+
+      `;
+
+
+      item
+      .querySelector(".delete")
+      .addEventListener(
+        "click",
+        ()=>deleteVideo(
+          video.id,
+          video.storagePath
+        )
+      );
+
+
+      videoList.appendChild(item);
+
+    });
+
+  }
+
+  catch(error){
+
+    console.error(error);
+
+    videoList.innerHTML =
+      `<div class="empty">
+        ❌ ভিডিও লোড করা যায়নি।
+      </div>`;
+
+  }
+
+}
+
+
+/* ================================
+   Delete Video
+================================ */
+
+async function deleteVideo(
+  id,
+  storagePath
+){
+
+  const ok =
+    confirm(
+      "এই ভিডিওটি Delete করতে চান?"
+    );
+
+
+  if(!ok)return;
+
+
+  try{
+
+    if(storagePath){
+
+      const fileRef =
+        ref(
+          storage,
+          storagePath
+        );
+
+      try{
+
+        await deleteObject(
+          fileRef
+        );
+
+      }
+
+      catch(error){
+
+        console.log(
+          "Storage file পাওয়া যায়নি।"
+        );
+
+      }
+
+    }
+
+
+    await deleteDoc(
+      doc(db,"videos",id)
+    );
+
+
+    message.innerText =
+      "✅ ভিডিও Delete হয়েছে।";
+
+
+    loadVideos();
+
+  }
+
+  catch(error){
+
+    console.error(error);
+
+    message.innerText =
+      "❌ Delete করা যায়নি।";
+
+  }
+
+}
+
+
+/* ================================
+   Safe Text
+================================ */
+
+function safe(text){
+
+  return String(text || "")
+
+    .replace(/&/g,"&amp;")
+
+    .replace(/</g,"&lt;")
+
+    .replace(/>/g,"&gt;")
+
+    .replace(/"/g,"&quot;")
+
+    .replace(/'/g,"&#039;");
+
+}
+
+</script>
+
+</body>
+  </html>

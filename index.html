@@ -1,266 +1,669 @@
 <!DOCTYPE html>
 <html lang="bn">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1.0">
-  <title>ভাইরাল ভিডিও</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
 
-  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+<title>SM Viral Link</title>
 
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+<style>
+*{
+  box-sizing:border-box;
+  -webkit-tap-highlight-color:transparent;
+}
 
-    body {
-      background: #0b0b0f;
-      color: white;
-      font-family: Arial, sans-serif;
-    }
+body{
+  margin:0;
+  background:#0d0e21;
+  color:#fff;
+  font-family:Arial,"Noto Sans Bengali",sans-serif;
+  padding-bottom:95px;
+}
 
-    header {
-      padding: 18px 15px 12px;
-      position: sticky;
-      top: 0;
-      background: #0b0b0f;
-      z-index: 10;
-    }
+.header{
+  height:64px;
+  padding:0 16px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  background:#17182d;
+  border-bottom:1px solid #292b47;
+  position:sticky;
+  top:0;
+  z-index:100;
+}
 
-    .logo {
-      font-size: 25px;
-      font-weight: bold;
-    }
+.logo{
+  font-size:22px;
+  font-weight:bold;
+}
 
-    .logo span {
-      color: #ff1744;
-    }
+.menu{
+  font-size:28px;
+  cursor:pointer;
+}
 
-    .search {
-      margin-top: 15px;
-      width: 100%;
-      padding: 13px 16px;
-      border: 1px solid #292932;
-      border-radius: 14px;
-      background: #17171e;
-      color: white;
-      outline: none;
-      font-size: 15px;
-    }
+.search-box{
+  margin:18px 16px;
+  height:52px;
+  border-radius:30px;
+  background:#1b1c35;
+  border:1px solid #303252;
+  display:flex;
+  align-items:center;
+  padding-left:20px;
+  color:#aaa;
+}
 
-    .categories {
-      display: flex;
-      gap: 8px;
-      overflow-x: auto;
-      padding: 5px 15px 15px;
-    }
+.search-box input{
+  flex:1;
+  height:100%;
+  border:0;
+  outline:0;
+  background:transparent;
+  color:white;
+  font-size:15px;
+}
 
-    .category {
-      white-space: nowrap;
-      background: #191920;
-      padding: 9px 15px;
-      border-radius: 20px;
-      font-size: 13px;
-    }
+.search-icon{
+  width:50px;
+  height:50px;
+  border-radius:50%;
+  background:linear-gradient(135deg,#9d48ef,#7540e8);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:24px;
+}
 
-    .category.active {
-      background: #ff1744;
-    }
+.tabs{
+  display:flex;
+  gap:10px;
+  overflow-x:auto;
+  padding:0 16px 18px;
+  scrollbar-width:none;
+}
 
-    .title {
-      padding: 5px 15px 12px;
-      font-size: 20px;
-    }
+.tabs::-webkit-scrollbar{
+  display:none;
+}
 
-    .videos {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
-      padding: 0 12px 80px;
-    }
+.tab{
+  flex-shrink:0;
+  padding:13px 22px;
+  border-radius:28px;
+  border:1px solid #30314d;
+  background:#17182d;
+  color:#bbb;
+  cursor:pointer;
+}
 
-    .card {
-      background: #15151b;
-      border-radius: 14px;
-      overflow: hidden;
-      cursor: pointer;
-    }
+.tab.active{
+  background:linear-gradient(90deg,#a847ee,#e83d9c);
+  color:#fff;
+  border-color:transparent;
+}
 
-    .thumb {
-      width: 100%;
-      aspect-ratio: 16 / 10;
-      background: linear-gradient(135deg,#24242d,#101015);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 35px;
-    }
+.container{
+  max-width:700px;
+  margin:auto;
+  padding:0 14px;
+}
 
-    .info {
-      padding: 10px;
-    }
+.card{
+  background:#191a31;
+  border:1px solid #30314c;
+  border-radius:20px;
+  overflow:hidden;
+  margin-bottom:22px;
+  box-shadow:0 8px 25px #0004;
+}
 
-    .name {
-      font-size: 14px;
-      font-weight: bold;
-      line-height: 1.4;
-    }
+.video-area{
+  position:relative;
+  background:#000;
+}
 
-    .views {
-      color: #999;
-      font-size: 12px;
-      margin-top: 5px;
-    }
+.video-area video{
+  width:100%;
+  display:block;
+  aspect-ratio:16/9;
+  object-fit:cover;
+}
 
-    nav {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      height: 65px;
-      background: #15151b;
-      border-top: 1px solid #292932;
-      display: flex;
-      justify-content: space-around;
-      align-items: center;
-    }
+.like{
+  position:absolute;
+  top:14px;
+  right:14px;
+  width:48px;
+  height:48px;
+  border-radius:50%;
+  background:#575819dd;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  font-size:27px;
+  cursor:pointer;
+}
 
-    nav div {
-      text-align: center;
-      color: #999;
-      font-size: 12px;
-    }
+.like.liked{
+  color:#ff4c88;
+}
 
-    nav .active {
-      color: #ff1744;
-    }
+.info{
+  padding:16px;
+}
 
-    .icon {
-      font-size: 22px;
-      display: block;
-      margin-bottom: 3px;
-    }
-  </style>
+.title{
+  font-size:20px;
+  font-weight:bold;
+  line-height:1.45;
+}
+
+.views{
+  color:#999;
+  margin-top:10px;
+  font-size:14px;
+}
+
+.actions{
+  display:flex;
+  gap:10px;
+  margin-top:16px;
+}
+
+.unlock{
+  flex:1;
+  height:52px;
+  border:0;
+  border-radius:13px;
+  background:linear-gradient(90deg,#a746ed,#e73d9e);
+  color:white;
+  font-size:17px;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+.link-btn{
+  width:70px;
+  border:0;
+  border-radius:13px;
+  background:#292b42;
+  color:#b04cf1;
+  font-size:25px;
+  cursor:pointer;
+}
+
+.bottom-nav{
+  position:fixed;
+  left:12px;
+  right:12px;
+  bottom:10px;
+  height:72px;
+  background:#292b40;
+  border:1px solid #393b55;
+  border-radius:25px;
+  display:flex;
+  justify-content:space-around;
+  align-items:center;
+  z-index:200;
+  box-shadow:0 8px 30px #0009;
+}
+
+.nav-item{
+  text-align:center;
+  color:#85879b;
+  font-size:12px;
+  cursor:pointer;
+}
+
+.nav-icon{
+  display:block;
+  font-size:26px;
+  margin-bottom:3px;
+}
+
+.nav-item.active{
+  color:#ed3ca5;
+}
+
+.empty{
+  text-align:center;
+  color:#888;
+  padding:50px 10px;
+}
+
+/* ছোট স্ক্রিন */
+@media(max-width:380px){
+  .title{
+    font-size:17px;
+  }
+
+  .tab{
+    padding:11px 17px;
+  }
+}
+</style>
 </head>
 
 <body>
 
-<header>
-  <div class="logo">🔥 ভাইরাল <span>ভিডিও</span></div>
+<header class="header">
+  <div class="logo">🎬 SM Viral Link</div>
+  <div class="menu">⋮</div>
+</header>
+
+
+<div class="search-box">
 
   <input
-    class="search"
     id="search"
     type="text"
     placeholder="ভিডিও খুঁজুন..."
+    oninput="searchVideos()"
   >
-</header>
 
-<div class="categories">
-  <div class="category active">সব</div>
-  <div class="category">🔥 ভাইরাল</div>
-  <div class="category">😂 মজার</div>
-  <div class="category">🎵 মিউজিক</div>
-  <div class="category">⚽ খেলাধুলা</div>
-  <div class="category">🎬 বিনোদন</div>
+  <div class="search-icon">⌕</div>
+
 </div>
 
-<h2 class="title">🔥 জনপ্রিয় ভিডিও</h2>
 
-<div class="videos" id="videos">
+<div class="tabs">
 
-  <div class="card" data-name="আজকের ভাইরাল ভিডিও">
-    <div class="thumb">▶️</div>
-    <div class="info">
-      <div class="name">আজকের ভাইরাল ভিডিও</div>
-      <div class="views">👁️ 12.5K views</div>
-    </div>
+  <div class="tab active"
+       onclick="changeCategory('all',this)">
+    All <span id="allCount">0</span>
   </div>
 
-  <div class="card" data-name="নতুন মজার ভিডিও">
-    <div class="thumb">😂</div>
-    <div class="info">
-      <div class="name">নতুন মজার ভিডিও</div>
-      <div class="views">👁️ 8.2K views</div>
-    </div>
+  <div class="tab"
+       onclick="changeCategory('viral',this)">
+    ভাইরাল লিংক <span id="viralCount">0</span>
   </div>
 
-  <div class="card" data-name="ভাইরাল মিউজিক ভিডিও">
-    <div class="thumb">🎵</div>
-    <div class="info">
-      <div class="name">ভাইরাল মিউজিক ভিডিও</div>
-      <div class="views">👁️ 25K views</div>
-    </div>
-  </div>
-
-  <div class="card" data-name="আজকের ট্রেন্ডিং">
-    <div class="thumb">🔥</div>
-    <div class="info">
-      <div class="name">আজকের ট্রেন্ডিং</div>
-      <div class="views">👁️ 31K views</div>
-    </div>
+  <div class="tab"
+       onclick="changeCategory('tiktok',this)">
+    TikTok Viral Link <span id="tiktokCount">0</span>
   </div>
 
 </div>
 
-<nav>
-  <div class="active">
-    <span class="icon">🏠</span>
+
+<main id="videoList" class="container"></main>
+
+
+<nav class="bottom-nav">
+
+  <div class="nav-item active"
+       onclick="bottomNav(this)">
+    <span class="nav-icon">⌂</span>
     হোম
   </div>
 
-  <div>
-    <span class="icon">🔥</span>
-    ভাইরাল
+  <div class="nav-item"
+       onclick="bottomNav(this)">
+    <span class="nav-icon">♥</span>
+    পছন্দ
   </div>
 
-  <div>
-    <span class="icon">📂</span>
-    ক্যাটাগরি
+  <div class="nav-item"
+       onclick="bottomNav(this)">
+    <span class="nav-icon">▣</span>
+    ভিডিও
   </div>
 
-  <div>
-    <span class="icon">👤</span>
-    প্রোফাইল
+  <div class="nav-item"
+       onclick="bottomNav(this)">
+    <span class="nav-icon">🔗</span>
+    লিংক
   </div>
+
 </nav>
 
+
 <script>
-  // Telegram Mini App
-  const tg = window.Telegram.WebApp;
 
-  tg.ready();
-  tg.expand();
+/* =========================
+   ভিডিও ডাটা
+========================= */
 
-  // Search
-  const search = document.getElementById("search");
-  const cards = document.querySelectorAll(".card");
+const videos = [
 
-  search.addEventListener("input", function () {
-    const value = this.value.toLowerCase();
+  {
+    id:1,
+    title:"আজকের জনপ্রিয় ভিডিও",
+    category:"viral",
+    video:"https://www.w3schools.com/html/mov_bbb.mp4",
+    views:17,
+    unlock:0
+  },
 
-    cards.forEach(card => {
-      const name = card.dataset.name.toLowerCase();
+  {
+    id:2,
+    title:"নতুন ট্রেন্ডিং ভিডিও",
+    category:"tiktok",
+    video:"https://www.w3schools.com/html/movie.mp4",
+    views:32,
+    unlock:1
+  },
 
-      if (name.includes(value)) {
-        card.style.display = "block";
-      } else {
-        card.style.display = "none";
-      }
-    });
+  {
+    id:3,
+    title:"আজকের ভাইরাল ভিডিও",
+    category:"viral",
+    video:"https://www.w3schools.com/html/mov_bbb.mp4",
+    views:54,
+    unlock:2
+  }
+
+];
+
+
+let currentCategory = "all";
+
+
+/* =========================
+   ভিডিও দেখানো
+========================= */
+
+function renderVideos(list = videos){
+
+  const box =
+    document.getElementById("videoList");
+
+  box.innerHTML = "";
+
+  if(list.length === 0){
+
+    box.innerHTML =
+      `<div class="empty">
+        কোনো ভিডিও পাওয়া যায়নি।
+       </div>`;
+
+    return;
+  }
+
+
+  list.forEach(video => {
+
+    box.innerHTML += `
+
+      <article class="card">
+
+        <div class="video-area">
+
+          <video
+            controls
+            preload="metadata"
+            src="${video.video}"
+            onclick="addView(${video.id})">
+          </video>
+
+          <div
+            class="like"
+            onclick="likeVideo(this)">
+            ♡
+          </div>
+
+        </div>
+
+
+        <div class="info">
+
+          <div class="title">
+            ${escapeHTML(video.title)}
+          </div>
+
+          <div class="views">
+            👁 ${video.views}
+          </div>
+
+
+          <div class="actions">
+
+            <button
+              class="unlock"
+              onclick="unlockVideo(${video.id})">
+
+              ▶ UNLOCK (${video.unlock}/3)
+
+            </button>
+
+
+            <button
+              class="link-btn"
+              onclick="copyVideoLink(${video.id})">
+
+              🔗
+
+            </button>
+
+          </div>
+
+        </div>
+
+      </article>
+
+    `;
+
   });
 
-  // Category click
-  document.querySelectorAll(".category").forEach(category => {
-    category.addEventListener("click", function () {
+}
 
-      document.querySelectorAll(".category")
-        .forEach(x => x.classList.remove("active"));
 
-      this.classList.add("active");
+/* =========================
+   Unlock
+========================= */
+
+function unlockVideo(id){
+
+  const video =
+    videos.find(v => v.id === id);
+
+  if(!video) return;
+
+
+  if(video.unlock < 3){
+
+    video.unlock++;
+
+    renderVideos();
+
+  }
+
+
+  if(video.unlock === 3){
+
+    alert("ভিডিওটি আনলক হয়েছে!");
+
+  }
+
+}
+
+
+/* =========================
+   View
+========================= */
+
+function addView(id){
+
+  const video =
+    videos.find(v => v.id === id);
+
+  if(video){
+
+    video.views++;
+
+    renderVideos();
+
+  }
+
+}
+
+
+/* =========================
+   Like
+========================= */
+
+function likeVideo(button){
+
+  button.classList.toggle("liked");
+
+  button.innerHTML =
+    button.classList.contains("liked")
+    ? "♥"
+    : "♡";
+
+}
+
+
+/* =========================
+   Link Copy
+========================= */
+
+function copyVideoLink(id){
+
+  const link =
+    location.href.split("#")[0] +
+    "#video-" + id;
+
+  navigator.clipboard.writeText(link)
+    .then(() => {
+
+      alert("ভিডিও লিংক কপি হয়েছে!");
+
     });
-  });
+
+}
+
+
+/* =========================
+   Category
+========================= */
+
+function changeCategory(category, element){
+
+  currentCategory = category;
+
+
+  document
+    .querySelectorAll(".tab")
+    .forEach(tab =>
+      tab.classList.remove("active")
+    );
+
+
+  element.classList.add("active");
+
+
+  if(category === "all"){
+
+    renderVideos(videos);
+
+  }else{
+
+    renderVideos(
+      videos.filter(v =>
+        v.category === category
+      )
+    );
+
+  }
+
+}
+
+
+/* =========================
+   Search
+========================= */
+
+function searchVideos(){
+
+  const text =
+    document
+      .getElementById("search")
+      .value
+      .toLowerCase();
+
+
+  let result = videos.filter(video =>
+    video.title
+      .toLowerCase()
+      .includes(text)
+  );
+
+
+  if(currentCategory !== "all"){
+
+    result =
+      result.filter(video =>
+        video.category === currentCategory
+      );
+
+  }
+
+
+  renderVideos(result);
+
+}
+
+
+/* =========================
+   Bottom Navigation
+========================= */
+
+function bottomNav(element){
+
+  document
+    .querySelectorAll(".nav-item")
+    .forEach(item =>
+      item.classList.remove("active")
+    );
+
+  element.classList.add("active");
+
+}
+
+
+/* =========================
+   নিরাপদ HTML
+========================= */
+
+function escapeHTML(text){
+
+  return String(text)
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
+
+}
+
+
+/* =========================
+   Counter
+========================= */
+
+document.getElementById("allCount")
+  .innerText = videos.length;
+
+document.getElementById("viralCount")
+  .innerText =
+  videos.filter(v =>
+    v.category === "viral"
+  ).length;
+
+document.getElementById("tiktokCount")
+  .innerText =
+  videos.filter(v =>
+    v.category === "tiktok"
+  ).length;
+
+
+/* প্রথমবার ভিডিও দেখানো */
+
+renderVideos();
+
 </script>
 
 </body>
